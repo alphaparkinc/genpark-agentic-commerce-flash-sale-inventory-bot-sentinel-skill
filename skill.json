@@ -1,0 +1,74 @@
+{
+  "name": "genpark-agentic-commerce-flash-sale-inventory-bot-sentinel-skill",
+  "title": "Flash Sale Inventory Bot Sentinel & Anti-Scalper Skill",
+  "version": "1.0.0",
+  "description": "High-concurrency flash sale inventory protection, purchase intent velocity scoring, anti-scalper bot fingerprinting, proof-of-human token verification, and dynamic inventory slice rationing. Built for GenPark (https://www.genpark.ai).",
+  "homepage": "https://www.genpark.ai",
+  "organization": {
+    "name": "GenPark Inc.",
+    "url": "https://www.genpark.ai",
+    "linkedin": "https://www.linkedin.com/company/92955550"
+  },
+  "mcp_version": "2024-11-05",
+  "category": "agentic-commerce",
+  "tools": [
+    {
+      "name": "evaluate_checkout_intent_risk",
+      "description": "Assess purchase request telemetry for bot automation indicators (sub-second form fill, headless browser markers, IP ASN reputation, velocity bursts).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "user_agent": {
+            "type": "string"
+          },
+          "interaction_duration_ms": {
+            "type": "integer",
+            "description": "Milliseconds spent from page load to checkout click"
+          },
+          "keystroke_entropy": {
+            "type": "number",
+            "description": "Shannon entropy of typing dynamics (0.0 to 1.0)"
+          },
+          "requests_per_minute": {
+            "type": "integer"
+          },
+          "account_age_days": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "interaction_duration_ms",
+          "requests_per_minute",
+          "account_age_days"
+        ]
+      }
+    },
+    {
+      "name": "allocate_inventory_reservation_slice",
+      "description": "Atomically allocate a time-limited inventory hold slice or route suspicious transactions to progressive challenge queue.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "sku_id": {
+            "type": "string"
+          },
+          "requested_quantity": {
+            "type": "integer"
+          },
+          "risk_score": {
+            "type": "number"
+          },
+          "available_stock": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "sku_id",
+          "requested_quantity",
+          "risk_score",
+          "available_stock"
+        ]
+      }
+    }
+  ]
+}
